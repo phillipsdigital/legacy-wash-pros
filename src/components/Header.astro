@@ -1,0 +1,237 @@
+---
+import Icon from './Icon.astro';
+import { nav, site } from '../data/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span class="topbar-item">
+      <Icon name="pin" size={16} color="#84BFCF" />
+      Serving Joplin, Carl Junction, Carthage, Webb City &amp; beyond
+    </span>
+    <span class="topbar-right">
+      <span>Free estimates · Residential &amp; commercial</span>
+      <a href={`sms:${site.phoneRaw}`} class="topbar-phone">
+        <Icon name="phone" size={15} />
+        {site.phone}
+      </a>
+    </span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label="Legacy Wash Pros home">
+      <img src="/images/logo-180.png" alt="" width="76" height="76" />
+      <span class="brand-text">
+        <span class="brand-name">Legacy Wash Pros</span>
+        <span class="brand-sub">Pressure &amp; Soft Washing</span>
+      </span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="visually-hidden">Menu</span>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+
+    <nav id="site-nav" aria-label="Main" class="site-nav">
+      {
+        nav.map((item) => (
+          <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a href={`tel:${site.phoneRaw}`} class="btn btn-navy btn-sm quote-btn" aria-label={`Call ${site.phone} for a free quote`}>
+        Get a Free Quote
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const navEl = document.getElementById('site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    navEl?.classList.toggle('open', !open);
+  });
+</script>
+
+<style>
+  .topbar {
+    background: var(--navy-deep);
+    border-bottom: 1px solid rgba(132, 191, 207, 0.18);
+    color: var(--text-on-dark);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .topbar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px 24px;
+    padding-block: 10px;
+  }
+  .topbar-item,
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px 20px;
+    flex-wrap: wrap;
+  }
+  .topbar-item {
+    gap: 8px;
+  }
+  .topbar-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .site-header {
+    background: var(--sky);
+    border-bottom: 1px solid rgba(0, 20, 41, 0.18);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 32px;
+    padding-block: 10px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    padding-top: 6px;
+    color: var(--cream);
+    text-shadow: 0 2px 0 var(--navy), 0 0 1px var(--navy);
+  }
+  .brand-sub {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-top: 2px;
+  }
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 28px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .site-nav a:not(.btn) {
+    color: var(--navy);
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 2px solid transparent;
+  }
+  .site-nav a:not(.btn):hover,
+  .site-nav a[aria-current='page'] {
+    border-bottom-color: var(--navy);
+  }
+  .quote-btn {
+    margin-left: 8px;
+  }
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: 2px solid var(--navy);
+    color: var(--navy);
+    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    .brand img {
+      width: 60px;
+      height: 60px;
+    }
+    .brand-name {
+      font-size: 24px;
+    }
+    .menu-toggle {
+      display: inline-flex;
+    }
+    .site-nav {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding-bottom: 12px;
+    }
+    .site-nav.open {
+      display: flex;
+    }
+    .site-nav a:not(.btn) {
+      padding: 14px 4px;
+      border-bottom: 1px solid rgba(0, 20, 41, 0.15);
+    }
+    .quote-btn {
+      margin: 12px 0 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .topbar-item,
+    .topbar-right > span {
+      display: none;
+    }
+    .topbar-inner {
+      justify-content: center;
+      padding-block: 8px;
+    }
+    .header-inner {
+      flex-wrap: wrap;
+    }
+    .brand {
+      flex: 1 1 0;
+      min-width: 0;
+      gap: 10px;
+    }
+    .brand img {
+      width: 52px;
+      height: 52px;
+    }
+    .brand-name {
+      font-size: 21px;
+    }
+    .brand-sub {
+      font-size: 9px;
+      letter-spacing: 1.6px;
+    }
+  }
+</style>

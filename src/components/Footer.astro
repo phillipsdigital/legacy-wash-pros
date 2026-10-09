@@ -1,0 +1,151 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+import { services, serviceHref } from '../data/services';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="footer-logo">
+        <img src="/images/logo-180.png" alt="Legacy Wash Pros logo" width="88" height="88" loading="lazy" />
+        <span>Legacy Wash Pros</span>
+      </a>
+      <p>
+        Restoring curb appeal one wash at a time. Family-owned pressure and soft washing for homes and businesses in
+        Joplin, MO and the surrounding area.
+      </p>
+      <div class="socials">
+        <a href={site.facebook} aria-label="Legacy Wash Pros on Facebook"><Icon name="facebook" /></a>
+        <a href={`mailto:${site.email}`} aria-label="Email Legacy Wash Pros"><Icon name="mail" /></a>
+        <a href={`sms:${site.phoneRaw}`} aria-label="Text Legacy Wash Pros"><Icon name="chat" /></a>
+      </div>
+    </div>
+
+    <nav aria-label="Services" class="footer-col">
+      <span class="footer-head">Services</span>
+      {services.map((s) => <a href={serviceHref(s.slug)}>{s.title}</a>)}
+    </nav>
+
+    <nav aria-label="Company" class="footer-col">
+      <span class="footer-head">Company</span>
+      <a href="/about/">About Ryan</a>
+      <a href="/our-work/">Our Work</a>
+      <a href="/services/">All Services</a>
+      <a href="/contact/">Free Quote</a>
+    </nav>
+
+    <div class="footer-col">
+      <span class="footer-head">Contact</span>
+      <a href={`tel:${site.phoneRaw}`} class="footer-phone">{site.phone}</a>
+      <span>Call or text anytime</span>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <span>Joplin, Webb City, Carthage, Carl Junction &amp; surrounding communities</span>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span>© {year} {site.legalName}. All rights reserved.</span>
+      <span>Site by <a href="https://phillipsdigitalsolutions.com/">Phillips Digital</a></span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--navy-deep);
+    color: var(--text-on-dark);
+    border-top: 4px solid var(--sky);
+  }
+  .footer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px 56px;
+    padding-block: 64px 40px;
+  }
+  .footer-brand {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .footer-brand p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 340px;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 30px;
+    line-height: 1;
+    color: var(--cream);
+  }
+  .footer-logo span {
+    padding-top: 6px;
+  }
+  .socials {
+    display: flex;
+    gap: 10px;
+  }
+  .socials a {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(132, 191, 207, 0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sky);
+  }
+  .footer-col {
+    flex: 1 1 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .footer-col a {
+    color: var(--text-on-dark);
+    text-decoration: none;
+  }
+  .footer-col a:hover {
+    color: var(--cream);
+  }
+  .footer-head {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--sky);
+  }
+  .footer-col .footer-phone {
+    color: var(--cream);
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(132, 191, 207, 0.16);
+  }
+  .footer-bottom-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-block: 20px;
+    font-size: 13px;
+    color: #8fa3b5;
+  }
+  .footer-bottom a {
+    font-weight: 600;
+    text-decoration: none;
+  }
+</style>

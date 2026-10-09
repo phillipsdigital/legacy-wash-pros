@@ -1,0 +1,309 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import Icon from '../../components/Icon.astro';
+import Stars from '../../components/Stars.astro';
+import { site } from '../../data/site';
+import { services, serviceHref, type Service } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service: s } = Astro.props;
+const others = services.filter((o) => o.slug !== s.slug);
+
+const why = [
+  { title: 'Reliable scheduling', text: 'We show up when we say we will and do what we say we’ll do.' },
+  { title: 'Clear communication', text: 'You’ll know the plan, the price and the timing up front.' },
+  { title: 'Affordable & detail-driven', text: 'Fair pricing with a commitment to quality on every job.' },
+  { title: 'Safe for your surfaces', text: 'We remove the mess without damaging what’s underneath.' },
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: `${s.title} in Joplin, MO`,
+  serviceType: s.title,
+  provider: { '@id': `${site.url}/#business` },
+  areaServed: site.serviceArea.map((city) => ({ '@type': 'City', name: `${city}, MO` })),
+  description: s.metaDescription,
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${site.url}/services/` },
+    { '@type': 'ListItem', position: 3, name: s.title, item: `${site.url}${serviceHref(s.slug)}` },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${s.title} in Joplin, MO | Legacy Wash Pros`}
+  description={s.metaDescription}
+  image={s.hero.src}
+  schema={[serviceSchema, breadcrumbSchema]}
+>
+  <PageHero
+    title={s.title}
+    intro={s.hero.intro}
+    breakAccent
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: s.title }]}
+    image={{ src: s.hero.src, alt: s.hero.alt }}
+  >
+    <div class="btn-row">
+      <a href="/contact/" class="btn btn-orange">Get My Free Quote <Icon name="arrow" size={18} stroke={2.5} /></a>
+      <a href={`sms:${site.phoneRaw}`} class="btn btn-ghost-light">Call or Text {site.phone}</a>
+    </div>
+    <ul class="checks">
+      {s.hero.checks.map((c) => <li><Icon name="check" color="#84BFCF" stroke={2.5} />{c}</li>)}
+    </ul>
+  </PageHero>
+
+  <!-- What we clean -->
+  <section class="section bg-cream" aria-labelledby="cover-h">
+    <div class="container">
+      <div class="stack" style="--gap:14px; max-width:760px">
+        <p class="eyebrow">What We Clean</p>
+        <h2 id="cover-h" class="h2">{s.covers.title}</h2>
+        <p class="lead">{s.covers.intro}</p>
+      </div>
+      <div class="grid covers" style="--min:300px">
+        {
+          s.covers.items.map((c) => (
+            <div class="card cover">
+              <span class="cover-icon"><Icon name="check" size={22} color="#001429" stroke={2.5} /></span>
+              <div>
+                <h3 class="h3">{c.title}</h3>
+                <p>{c.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Why + review -->
+  <section class="section bg-tint" aria-labelledby="why-h">
+    <div class="container split">
+      <div class="stack" style="--gap:22px; flex: 1.2 1 480px">
+        <p class="eyebrow">Why Legacy Wash Pros</p>
+        <h2 id="why-h" class="h2">Why Joplin Chooses Legacy</h2>
+        <div class="grid why" style="--min:220px">
+          {
+            why.map((w) => (
+              <div class="why-item">
+                <span>{w.title}</span>
+                <p>{w.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <figure class="quote-card">
+        <Stars size={20} />
+        <blockquote>“{s.review.quote}”</blockquote>
+        <figcaption>{s.review.name} · {s.review.label}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Recent jobs -->
+  <section class="section bg-navy" aria-labelledby="recent-h">
+    <div class="container">
+      <div class="section-head">
+        <div class="stack" style="--gap:12px">
+          <p class="eyebrow">Recent Jobs</p>
+          <h2 id="recent-h" class="h2">{s.recent.title}</h2>
+        </div>
+        <a href="/our-work/" class="btn btn-ghost-sky btn-sm">See All Our Work</a>
+      </div>
+      <div class:list={['grid', 'recent', s.recent.layout]} style={`--min:${s.recent.layout === 'landscape' ? 420 : 300}px`}>
+        {
+          s.recent.photos.map((p) => (
+            <figure>
+              <div class="media framed recent-img">
+                <img src={p.src} alt={p.alt} width="700" height="560" loading="lazy" />
+                {p.label && <span class:list={['tag', { after: p.label === 'After' }]}>{p.label}</span>}
+              </div>
+              <figcaption>{p.caption}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Steps + other services -->
+  <section class="section bg-cream" aria-labelledby="steps-h">
+    <div class="container">
+      <h2 id="steps-h" class="h2 center">How It Works</h2>
+      <div style="margin-top:40px">
+        <HowItWorks />
+      </div>
+
+      <div class="others">
+        <h2 class="h3 others-title">Other Services</h2>
+        <div class="grid" style="--min:200px; gap:16px">
+          {
+            others.map((o) => (
+              <a href={serviceHref(o.slug)} class="card other">
+                <span class="other-img">
+                  <img src={o.card.src} alt="" width="400" height="250" loading="lazy" />
+                </span>
+                <span class="other-label">
+                  {o.title}
+                  <Icon name="arrow" size={16} color="#F26A1B" stroke={2.5} />
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .center {
+    text-align: center;
+  }
+  .covers {
+    margin-top: 44px;
+    gap: 20px;
+  }
+  .cover {
+    padding: 26px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .cover-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--sky);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  .cover .h3 {
+    font-size: 24px;
+  }
+  .cover p {
+    margin: 6px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .why {
+    gap: 22px;
+  }
+  .why-item span {
+    font-weight: 800;
+    font-size: 17px;
+  }
+  .why-item p {
+    margin: 6px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .quote-card {
+    flex: 1 1 380px;
+    margin: 0;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .quote-card blockquote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 28px;
+    line-height: 1.2;
+  }
+  .quote-card figcaption {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--sky);
+  }
+
+  .recent {
+    margin-top: 40px;
+    gap: 22px;
+  }
+  .recent figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .recent-img {
+    aspect-ratio: 4 / 5;
+  }
+  .landscape .recent-img {
+    aspect-ratio: 4 / 3;
+  }
+  .recent figcaption {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .others {
+    margin-top: 72px;
+    border-top: 1px solid var(--line);
+    padding-top: 56px;
+  }
+  .others-title {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+  .other {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 14px;
+    text-decoration: none;
+  }
+  .other:hover {
+    color: var(--navy);
+  }
+  .other-img {
+    display: block;
+    aspect-ratio: 16 / 10;
+    background: #dde8ec;
+    overflow: hidden;
+  }
+  .other-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .other-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    font-weight: 800;
+    font-size: 15px;
+  }
+</style>

@@ -1,0 +1,94 @@
+---
+interface Props {
+  variant?: 'cards' | 'compact';
+}
+const { variant = 'compact' } = Astro.props;
+
+const steps = [
+  { title: 'Call or text us', text: 'Reach Ryan at (417) 529-5607. Text a few photos of the job if you have them.' },
+  { title: 'Get your free estimate', text: 'A clear, affordable price before any work begins.' },
+  { title: 'Enjoy the results', text: 'Reliable scheduling, careful work and results you can see the moment we’re done.' },
+];
+---
+
+<ol class:list={['steps', variant]}>
+  {
+    steps.map((s, i) => (
+      <li>
+        <span class="num">{variant === 'cards' ? `0${i + 1}` : i + 1}</span>
+        <span class="body">
+          <span class="title">{s.title}</span>
+          <span class="text">{s.text}</span>
+        </span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .num {
+    font-family: var(--font-display);
+    line-height: 0.9;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .title {
+    font-weight: 800;
+    font-size: 17px;
+  }
+  .text {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .compact li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .compact .num {
+    font-size: 48px;
+    color: var(--teal);
+  }
+  .compact .text {
+    color: var(--text-muted);
+  }
+
+  .cards {
+    gap: 24px;
+  }
+  .cards li {
+    background: rgba(132, 191, 207, 0.08);
+    border: 1px solid rgba(132, 191, 207, 0.25);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cards .num {
+    font-size: 56px;
+    color: var(--sky);
+  }
+  .cards .title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.05;
+  }
+  .cards .text {
+    font-size: 16px;
+    color: var(--text-on-dark);
+  }
+</style>

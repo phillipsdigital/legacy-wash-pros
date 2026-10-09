@@ -1,0 +1,237 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import Stars from '../components/Stars.astro';
+
+const values = [
+  { icon: 'shield', title: 'Honesty & integrity', text: 'Straight answers, fair prices and doing what we say we’ll do.' },
+  { icon: 'wrench', title: 'Strong work ethic', text: 'Detail-driven work on every job, big or small.' },
+  { icon: 'chat', title: 'Clear communication', text: 'Reliable scheduling and updates you never have to chase.' },
+  { icon: 'people', title: 'Long-term relationships', text: 'Treating people right and earning their trust for the long haul.' },
+] as const;
+---
+
+<BaseLayout
+  title="About Legacy Wash Pros | Family-Owned Pressure Washing in Joplin, MO"
+  description="Meet Ryan and the Legacy Wash Pros crew — a family-owned pressure washing business in Joplin, MO built on honesty, integrity and hard work."
+  image="/images/ryan-and-son.webp"
+>
+  <PageHero
+    title="Family-Owned Pressure Washing"
+    intro="Legacy Wash Pros isn’t just a pressure washing company — it’s a reflection of the values we stand for and the future we’re building, one clean driveway at a time."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
+    image={{ src: '/images/ryan-and-son.webp', alt: 'Ryan and his son flexing in matching Legacy Wash Pros jerseys' }}
+    freeBadge={false}
+  >
+    <div class="btn-row">
+      <a href="/contact/" class="btn btn-orange">Get My Free Quote <Icon name="arrow" size={18} stroke={2.5} /></a>
+      <a href="/our-work/" class="btn btn-ghost-light">See Our Work</a>
+    </div>
+  </PageHero>
+
+  <section class="section bg-cream" aria-labelledby="story-h">
+    <div class="container story">
+      <div class="stack story-side" style="--gap:16px">
+        <p class="eyebrow">Meet the Expert</p>
+        <h2 id="story-h" class="h2">Hi there — I’m Ryan.</h2>
+        <div class="ryan-photo">
+          <div class="ryan-back" aria-hidden="true"></div>
+          <div class="media ryan-img">
+            <img src="/images/ryan.webp" alt="Ryan, owner of Legacy Wash Pros, in his Legacy jersey" width="600" height="800" loading="lazy" />
+          </div>
+        </div>
+      </div>
+      <div class="story-body">
+        <p>
+          In 2025, I made the decision to build something bigger than myself. After years in the trucking industry, I
+          felt a strong pull to create a business that offered more than just a paycheck. I wanted to build something
+          meaningful — something that would allow me to step away from the road, be present for my family, and create a
+          lasting legacy.
+        </p>
+        <p>
+          Legacy Wash Pros was founded with a deeper purpose: to teach my children the values I didn’t fully learn until
+          later in life — money management, strong work ethic, honesty, and integrity. These principles are not just
+          lessons for my kids; they are the foundation of how we do business every day.
+        </p>
+        <p>
+          We believe that quality work, clear communication, and treating people right still matter. Whether we’re
+          cleaning a home, a business, or a large commercial property, our goal is simple: deliver professional results
+          while building long-term relationships rooted in trust.
+        </p>
+        <p class="pull">
+          Legacy Wash Pros isn’t just a pressure washing company — it’s a reflection of the values we stand for and the
+          future we’re building.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-navy" aria-labelledby="values-h">
+    <div class="container">
+      <div class="section-head center stack" style="--gap:14px">
+        <p class="eyebrow">What We Stand For</p>
+        <h2 id="values-h" class="h2">The Values Behind Every Wash</h2>
+      </div>
+      <div class="grid values" style="--min:250px">
+        {
+          values.map((v) => (
+            <div class="value">
+              <span class="value-icon"><Icon name={v.icon} size={26} color="#001429" /></span>
+              <h3 class="h3">{v.title}</h3>
+              <p>{v.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-tint" aria-labelledby="crew-h">
+    <div class="container split">
+      <div class="crew-grid">
+        <div class="media wide">
+          <img src="/images/brick-ranch-crew.webp" alt="Ryan's boys washing a brick ranch home with the Legacy trailer in the drive" width="800" height="600" loading="lazy" />
+        </div>
+        <div class="media">
+          <img src="/images/crew-brick-wash.webp" alt="Two of Ryan's boys in Legacy jerseys washing brick" width="400" height="533" loading="lazy" />
+        </div>
+        <div class="media">
+          <img src="/images/crew-trailer.webp" alt="The crew loading the Legacy Wash Pros truck and water trailer" width="400" height="533" loading="lazy" />
+        </div>
+      </div>
+      <div class="stack" style="--gap:18px">
+        <p class="eyebrow">The Crew</p>
+        <h2 id="crew-h" class="h2">Ryan &amp; His Boys</h2>
+        <p class="lead">
+          When you hire Legacy Wash Pros, you get a family on the job. Ryan’s sons work alongside him, learning the trade
+          and the values behind it — and our customers notice.
+        </p>
+        <figure class="card crew-quote">
+          <Stars />
+          <blockquote>
+            “His boys were well mannered and did a good job helping and all show strong work ethic. Would definitely
+            recommend him to anyone needing any concrete cleaning, house washing, windows or anything else.”
+          </blockquote>
+          <figcaption>Harvey B.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .story {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 72px;
+  }
+  .story-side {
+    flex: 1 1 340px;
+    min-width: 0;
+  }
+  .ryan-photo {
+    margin-top: 12px;
+    position: relative;
+    padding: 0 20px 20px 0;
+    max-width: 440px;
+  }
+  .ryan-back {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 20px;
+    top: 20px;
+    border-radius: var(--radius-lg);
+    background: var(--sky);
+  }
+  .ryan-img {
+    border-radius: var(--radius-lg);
+    aspect-ratio: 3 / 4;
+  }
+  .ryan-img img {
+    object-position: left center;
+  }
+  .story-body {
+    flex: 1.6 1 520px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #33414f;
+  }
+  .story-body p {
+    margin: 0;
+  }
+  .story-body .pull {
+    font-family: var(--font-display);
+    font-size: 28px;
+    line-height: 1.15;
+    color: var(--navy);
+    padding-top: 6px;
+  }
+
+  .values {
+    margin-top: 52px;
+    gap: 22px;
+  }
+  .value {
+    background: rgba(132, 191, 207, 0.08);
+    border: 1px solid rgba(132, 191, 207, 0.25);
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .value-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--sky);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .value p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-on-dark);
+  }
+
+  .crew-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .crew-grid .media {
+    aspect-ratio: 3 / 4;
+  }
+  .crew-grid .wide {
+    grid-column: span 2;
+    aspect-ratio: 4 / 3;
+  }
+  .crew-quote {
+    margin: 8px 0 0;
+    padding: 26px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .crew-quote blockquote {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: #22313f;
+  }
+  .crew-quote figcaption {
+    font-weight: 800;
+    font-size: 15px;
+  }
+</style>

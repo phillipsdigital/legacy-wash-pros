@@ -1,0 +1,632 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WaveLines from '../components/WaveLines.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import Stars from '../components/Stars.astro';
+import { site } from '../data/site';
+import { services, serviceHref } from '../data/services';
+import { reviews } from '../data/reviews';
+import { homeGallery } from '../data/gallery';
+
+const beforeAfter = [
+  {
+    before: { src: '/images/two-story-before.webp', alt: 'Two-story vinyl siding streaked with mildew before washing' },
+    after: { src: '/images/two-story-after.webp', alt: 'The same two-story home with clean siding after a soft wash' },
+    title: 'Two-story home',
+    sub: 'House soft wash',
+  },
+  {
+    before: { src: '/images/roof-before.webp', alt: 'Shingle roof with streaks before washing' },
+    after: { src: '/images/roof-after.webp', alt: 'The same roof clean and even-toned after washing' },
+    title: 'Streaked shingle roof',
+    sub: 'Roof washing',
+  },
+];
+
+const trust = [
+  { icon: 'clipboard', text: 'Free in-home estimates' },
+  { icon: 'home', text: 'Family-owned & operated' },
+  { icon: 'briefcase', text: 'Residential & commercial' },
+  { icon: 'phone', text: 'Call or text anytime' },
+] as const;
+---
+
+<BaseLayout
+  title="Pressure & Soft Washing in Joplin, MO | Legacy Wash Pros"
+  description="Legacy Wash Pros provides pressure washing and soft washing in Joplin, MO — driveways, house washing, roofs, decks, fences and windows. Family-owned. Free estimates: (417) 529-5607."
+>
+  <!-- HERO -->
+  <section class="hero bg-navy">
+    <div class="ring" aria-hidden="true" style="right:-180px;top:-220px;width:620px;height:620px"></div>
+    <div class="ring" aria-hidden="true" style="right:-80px;top:-120px;width:420px;height:420px;opacity:.8"></div>
+    <WaveLines variant="full" />
+    <div class="container hero-inner">
+      <div class="stack hero-copy" style="--gap:26px">
+        <h1 class="h1 hero-h1">Pressure &amp; Soft Washing<br /><span class="accent">in Joplin, MO</span></h1>
+        <p class="lead">
+          Legacy Wash Pros provides professional pressure and soft washing for driveways, siding, roofs, decks and
+          storefronts across Joplin, Webb City, Carthage and Carl Junction. We lift the grime without damaging your
+          surfaces, show up when we say we will, and leave your property looking new.
+        </p>
+        <div class="btn-row">
+          <a href="/contact/" class="btn btn-orange">Get My Free Quote <Icon name="arrow" size={18} stroke={2.5} /></a>
+          <a href={`sms:${site.phoneRaw}`} class="btn btn-ghost-light"><Icon name="chat" size={18} color="#84BFCF" /> Call or Text {site.phone}</a>
+        </div>
+        <ul class="hero-list">
+          <li><Icon name="check" color="#84BFCF" stroke={2.5} />Concrete &amp; driveways</li>
+          <li><Icon name="check" color="#84BFCF" stroke={2.5} />House soft washing</li>
+          <li><Icon name="check" color="#84BFCF" stroke={2.5} />Roof, deck &amp; fence</li>
+          <li><Icon name="check" color="#84BFCF" stroke={2.5} />Commercial windows</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="media hero-photo">
+          <img src="/images/crew-commercial-door.webp" alt="Ryan's crew squeegeeing commercial storefront windows" width="800" height="600" fetchpriority="high" />
+          <span class="tag">Ryan &amp; the crew at work</span>
+        </div>
+        <figure class="hero-review">
+          <Stars />
+          <blockquote>“Ryan does what he says he’s going to do when he says he’s going to do it!”</blockquote>
+          <figcaption>Amanda B. · Joplin-area homeowner</figcaption>
+        </figure>
+        <div class="free-badge big">
+          <strong>FREE</strong>
+          <span>Estimates</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST + SERVICES -->
+  <section id="services" class="bg-cream" aria-labelledby="services-h">
+    <div class="container">
+      <ul class="trust">
+        {
+          trust.map((t) => (
+            <li>
+              <span class="trust-icon"><Icon name={t.icon} size={22} color="#001429" /></span>
+              {t.text}
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="section-head services-head">
+        <div class="stack" style="--gap:14px; flex: 1 1 520px; min-width: 0">
+          <p class="eyebrow">Our Services</p>
+          <h2 id="services-h" class="h2">Exterior Cleaning for Every Surface</h2>
+          <p class="lead">
+            From stubborn grime to slippery buildup, we clean driveways, patios, sidewalks, siding, roofs, decks, fences
+            and windows — without damaging your surfaces.
+          </p>
+        </div>
+        <a href="/services/" class="btn btn-ghost-dark btn-sm">View All Services <Icon name="arrow" size={18} stroke={2.5} /></a>
+      </div>
+
+      <div class="grid service-grid" style="--min:300px">
+        {
+          services.map((s) => (
+            <a href={serviceHref(s.slug)} class="card service-card">
+              <div class="service-img">
+                <img src={s.card.src} alt={s.card.alt} width="600" height="450" loading="lazy" />
+              </div>
+              <div class="service-body">
+                <h3 class="h3">{s.title}</h3>
+                <p>{s.short}</p>
+                <span class="learn">
+                  Learn more <Icon name="arrow" size={18} color="#F26A1B" stroke={2.5} />
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE & AFTER -->
+  <section class="section bg-navy ba" aria-labelledby="ba-h">
+    <div class="ring" aria-hidden="true" style="left:-200px;top:-200px;width:560px;height:560px"></div>
+    <div class="container" style="position:relative">
+      <div class="section-head center stack" style="--gap:14px">
+        <p class="eyebrow">Before &amp; After</p>
+        <h2 id="ba-h" class="h2">Results You Can See Immediately</h2>
+        <p class="lead">Real jobs from around the Joplin area — that’s the Legacy difference.</p>
+      </div>
+      <div class="ba-list">
+        {
+          beforeAfter.map((p) => (
+            <figure class="ba-pair">
+              <div class="ba-frame">
+                <div class="media ba-img">
+                  <img src={p.before.src} alt={p.before.alt} width="700" height="525" loading="lazy" />
+                  <span class="tag">Before</span>
+                </div>
+                <div class="media ba-img">
+                  <img src={p.after.src} alt={p.after.alt} width="700" height="525" loading="lazy" />
+                  <span class="tag after">After</span>
+                </div>
+              </div>
+              <figcaption>
+                {p.title} <span>· {p.sub}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      <div class="center-btn">
+        <a href="/our-work/" class="btn btn-sky">See More of Our Work <Icon name="arrow" size={18} stroke={2.5} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEET THE EXPERT -->
+  <section id="about" class="section bg-cream" aria-labelledby="about-h">
+    <div class="container split">
+      <div class="owner-photo">
+        <div class="owner-back" aria-hidden="true"></div>
+        <div class="media owner-img">
+          <img src="/images/ryan-and-son.webp" alt="Ryan and his son flexing in matching Legacy Wash Pros jerseys" width="800" height="960" loading="lazy" />
+        </div>
+      </div>
+      <div class="stack" style="--gap:18px">
+        <p class="eyebrow">Meet the Expert</p>
+        <h2 id="about-h" class="h2">Hi there — I’m Ryan.</h2>
+        <p class="lead">
+          In 2025, after years in the trucking industry, I decided to build something bigger than myself — a business
+          that would let me step away from the road, be present for my family, and create a lasting legacy.
+        </p>
+        <p class="lead">
+          Legacy Wash Pros was founded to teach my kids the values I didn’t fully learn until later in life: money
+          management, strong work ethic, honesty and integrity. Those principles are the foundation of how we do business
+          every day.
+        </p>
+        <ul class="values">
+          <li class="chip">Honesty</li>
+          <li class="chip">Integrity</li>
+          <li class="chip">Strong work ethic</li>
+          <li class="chip">Clear communication</li>
+        </ul>
+        <a href="/about/" class="btn btn-navy" style="align-self:flex-start">Read Our Story <Icon name="arrow" size={18} color="#F26A1B" stroke={2.5} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="section bg-tint" aria-labelledby="reviews-h">
+    <div class="container">
+      <div class="section-head center stack" style="--gap:14px">
+        <p class="eyebrow">Testimonials</p>
+        <h2 id="reviews-h" class="h2">What Our Neighbors Are Saying</h2>
+      </div>
+      <div class="grid reviews" style="--min:320px">
+        {
+          reviews.map((r) => (
+            <figure class="card review">
+              <div class="review-top">
+                <Stars />
+                <Icon name="quote" size={34} color="#84BFCF" />
+              </div>
+              <blockquote>“{r.quote}”</blockquote>
+              <figcaption>
+                <span class="avatar">{r.name.charAt(0)}</span>
+                {r.name}
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENT WORK -->
+  <section id="portfolio" class="section bg-navy" aria-labelledby="work-h">
+    <div class="container">
+      <div class="section-head">
+        <div class="stack" style="--gap:14px">
+          <p class="eyebrow">Our Work</p>
+          <h2 id="work-h" class="h2">Recent Jobs Around Joplin</h2>
+        </div>
+        <a href="/our-work/" class="btn btn-ghost-sky btn-sm">View the Gallery <Icon name="arrow" size={18} stroke={2.5} /></a>
+      </div>
+      <div class="grid work-grid" style="--min:340px">
+        {
+          homeGallery.map((g) => (
+            <figure class="media work-item">
+              <img src={g.src} alt={g.alt} width="500" height="625" loading="lazy" />
+              <figcaption>{g.caption}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE AREA -->
+  <section class="section bg-cream" aria-labelledby="area-h">
+    <div class="container split">
+      <div class="stack" style="--gap:16px; flex: 1.4 1 520px">
+        <p class="eyebrow">Service Area</p>
+        <h2 id="area-h" class="h2">Proudly Serving Joplin &amp; the Surrounding Area</h2>
+        <p class="lead">
+          Whether it’s your home or your business, we help properties across Southwest Missouri look cleaner, brighter
+          and more inviting.
+        </p>
+        <ul class="towns">
+          {
+            site.serviceArea.map((t) => (
+              <li class="chip town">
+                <Icon name="pin" size={16} color="#2E6F8E" stroke={2.2} />
+                {t}
+              </li>
+            ))
+          }
+          <li class="chip town more">&amp; surrounding communities</li>
+        </ul>
+      </div>
+      <div class="area-card">
+        <span class="h3">Not sure we cover your street?</span>
+        <p>Send us a quick text with your address and what needs cleaning. We’ll let you know right away.</p>
+        <a href={`sms:${site.phoneRaw}`} class="btn btn-sky btn-sm">Text {site.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 56px;
+    padding-block: 72px 200px;
+  }
+  .hero-copy {
+    flex: 1 1 480px;
+    min-width: 0;
+  }
+  .hero-h1 {
+    font-size: clamp(44px, 6vw, 76px);
+  }
+  .hero .lead {
+    font-size: 19px;
+    max-width: 540px;
+  }
+  .hero-list {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 24px;
+    max-width: 520px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .hero-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-visual {
+    flex: 1 1 440px;
+    min-width: 0;
+    position: relative;
+    padding: 0 0 36px 28px;
+  }
+  .hero-photo {
+    border-radius: var(--radius-lg);
+    border: 6px solid var(--cream);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    aspect-ratio: 4 / 3;
+  }
+  .hero-photo .tag {
+    left: 16px;
+    top: 16px;
+    padding: 8px 12px;
+  }
+  .hero-review {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    max-width: 86%;
+    margin: 0;
+    background: var(--cream);
+    color: var(--navy);
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .hero-review blockquote {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+  .hero-review figcaption {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .free-badge.big {
+    right: -8px;
+    top: -18px;
+    width: 104px;
+    height: 104px;
+  }
+  .free-badge.big strong {
+    font-size: 30px;
+  }
+
+  /* Trust + services */
+  .trust {
+    list-style: none;
+    margin: 0;
+    padding: 28px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px 32px;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .trust li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .trust-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--sky);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  .services-head {
+    padding-top: 88px;
+  }
+  .service-grid {
+    margin-top: 48px;
+    padding-bottom: 96px;
+    gap: 28px;
+  }
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-3px);
+    color: var(--navy);
+  }
+  .service-img {
+    aspect-ratio: 4 / 3;
+    background: #dde8ec;
+    overflow: hidden;
+  }
+  .service-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .service-body {
+    padding: 24px 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1 1 auto;
+  }
+  .service-body .h3 {
+    font-size: 28px;
+  }
+  .service-body p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    flex: 1 1 auto;
+  }
+  .learn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 15px;
+    margin-top: 6px;
+  }
+
+  /* Before & after */
+  .ba {
+    position: relative;
+    overflow: hidden;
+  }
+  .ba-list {
+    margin-top: 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  .ba-pair {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .ba-frame {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    background: var(--cream);
+    padding: 8px;
+    border-radius: var(--radius-lg);
+  }
+  .ba-img {
+    border-radius: 16px;
+    aspect-ratio: 4 / 3;
+  }
+  .ba-pair figcaption {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .ba-pair figcaption span {
+    color: var(--sky);
+    font-weight: 500;
+  }
+  .center-btn {
+    margin-top: 44px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Owner */
+  .owner-photo {
+    position: relative;
+    padding: 0 24px 24px 0;
+  }
+  .owner-back {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 24px;
+    top: 24px;
+    border-radius: var(--radius-lg);
+    background: var(--sky);
+  }
+  .owner-img {
+    border-radius: var(--radius-lg);
+    aspect-ratio: 5 / 6;
+  }
+  .owner-img img {
+    object-position: center top;
+  }
+  .values,
+  .towns {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .values .chip {
+    background: var(--navy);
+    color: var(--cream);
+  }
+
+  /* Reviews */
+  .reviews {
+    margin-top: 52px;
+  }
+  .review {
+    margin: 0;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .review-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .review blockquote {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #22313f;
+    flex: 1 1 auto;
+  }
+  .review figcaption {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 18px;
+    padding-top: 3px;
+  }
+
+  /* Work grid */
+  .work-grid {
+    margin-top: 44px;
+    gap: 20px;
+  }
+  .work-item {
+    margin: 0;
+    border-radius: 16px;
+    aspect-ratio: 4 / 5;
+  }
+  .work-item figcaption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    background: rgba(0, 12, 26, 0.86);
+    color: var(--cream);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  /* Service area */
+  .town {
+    background: #fff;
+    border: 1.5px solid var(--sky);
+    font-size: 15px;
+    padding: 10px 16px;
+  }
+  .town.more {
+    border-style: dashed;
+    color: var(--text);
+  }
+  .area-card {
+    flex: 1 1 360px;
+    background: var(--navy);
+    color: var(--cream);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .area-card .h3 {
+    font-size: 28px;
+  }
+  .area-card p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-on-dark);
+  }
+</style>

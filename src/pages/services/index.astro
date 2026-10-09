@@ -1,0 +1,183 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../data/site';
+import { services, serviceHref } from '../../data/services';
+---
+
+<BaseLayout
+  title="Pressure Washing Services in Joplin, MO | Legacy Wash Pros"
+  description="Concrete, house, roof, deck, fence and window washing in Joplin, Webb City, Carthage and Carl Junction, MO. Family-owned with free estimates."
+>
+  <PageHero
+    title="Pressure Washing Services"
+    intro="Six ways we restore curb appeal for homes and businesses across Joplin, Webb City, Carthage and Carl Junction. Every job starts with a free estimate and ends with results you can see immediately."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
+  >
+    <div class="btn-row">
+      <a href="/contact/" class="btn btn-orange">Get My Free Quote <Icon name="arrow" size={18} stroke={2.5} /></a>
+      <a href={`sms:${site.phoneRaw}`} class="btn btn-ghost-light">Call or Text {site.phone}</a>
+    </div>
+    <ul class="jump">
+      {services.map((s) => <li><a href={`#${s.slug}`}>{s.title}</a></li>)}
+    </ul>
+  </PageHero>
+
+  <section class="section bg-cream" aria-label="All services">
+    <div class="container rows">
+      {
+        services.map((s, i) => (
+          <article id={s.slug} class="card row">
+            <div class="row-img">
+              <img src={s.card.src} alt={s.card.alt} width="700" height="525" loading="lazy" />
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            </div>
+            <div class="row-body">
+              <h2 class="h2">{s.title}</h2>
+              <p>{s.long}</p>
+              <ul class="bullets">
+                {s.bullets.map((b) => (
+                  <li>
+                    <span class="dot"><Icon name="check" size={14} color="#001429" stroke={3} /></span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <div class="btn-row">
+                <a href={serviceHref(s.slug)} class="btn btn-navy btn-sm">
+                  {s.title} Details <Icon name="arrow" size={16} color="#F26A1B" stroke={2.5} />
+                </a>
+                <a href="/contact/" class="btn btn-ghost-dark btn-sm">Get a Quote</a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section bg-navy" aria-labelledby="how-h">
+    <div class="container">
+      <div class="section-head center stack" style="--gap:14px">
+        <p class="eyebrow">How It Works</p>
+        <h2 id="how-h" class="h2">Three Easy Steps to a Cleaner Property</h2>
+      </div>
+      <div style="margin-top:52px">
+        <HowItWorks variant="cards" />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .jump {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .jump a {
+    display: inline-block;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(132, 191, 207, 0.14);
+    border: 1px solid rgba(132, 191, 207, 0.4);
+  }
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  .row {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    scroll-margin-top: 120px;
+  }
+  .row-img {
+    flex: 1 1 380px;
+    min-width: 0;
+    min-height: 360px;
+    position: relative;
+    background: #dde8ec;
+  }
+  .row-img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .num {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    background: var(--navy);
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1;
+    padding: 10px 14px 6px;
+    border-radius: 8px;
+  }
+  .row-body {
+    flex: 1.3 1 460px;
+    min-width: 0;
+    padding: 44px 44px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .row-body .h2 {
+    font-size: clamp(32px, 3.4vw, 42px);
+    padding-top: 4px;
+  }
+  .row-body p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  .bullets {
+    list-style: none;
+    margin: 4px 0 6px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px 20px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .bullets li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--sky);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  @media (max-width: 640px) {
+    .row-body {
+      padding: 28px 24px;
+    }
+  }
+</style>

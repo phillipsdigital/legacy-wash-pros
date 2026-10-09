@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+import { gallery, galleryCategories, categoryLabel } from '../data/gallery';
+---
+
+<BaseLayout
+  title="Our Work | Pressure Washing Before & After in Joplin, MO | Legacy Wash Pros"
+  description="See before-and-after photos of driveways, siding, roofs, decks, fences and storefronts cleaned by Legacy Wash Pros in Joplin, MO."
+  image="/images/two-story-after.webp"
+>
+  <PageHero
+    title="Our Pressure Washing Work"
+    intro="Driveways, siding, roofs, decks, fences and storefront glass — real before-and-after results from homes and businesses around the Joplin area."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Our Work' }]}
+  />
+
+  <section class="section bg-cream" aria-labelledby="feature-h">
+    <div class="container stack" style="--gap:40px">
+      <div class="section-head">
+        <div class="stack" style="--gap:12px">
+          <p class="eyebrow">Featured Transformation</p>
+          <h2 id="feature-h" class="h2">Mildewed Siding, Restored</h2>
+        </div>
+        <p class="lead" style="max-width:440px">A gentle house wash lifted the green mildew without blasting the vinyl.</p>
+      </div>
+      <div class="grid" style="--min:320px; gap:20px">
+        <figure class="media feature">
+          <img src="/images/two-story-before.webp" alt="Two-story vinyl siding streaked with mildew before washing" width="700" height="525" loading="lazy" />
+          <figcaption class="tag">Before</figcaption>
+        </figure>
+        <figure class="media feature">
+          <img src="/images/two-story-after.webp" alt="The same two-story home with clean siding after a soft wash" width="700" height="525" loading="lazy" />
+          <figcaption class="tag after">After</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-navy" aria-labelledby="gallery-h">
+    <div class="container">
+      <div class="section-head center stack" style="--gap:14px">
+        <p class="eyebrow">Project Gallery</p>
+        <h2 id="gallery-h" class="h2">Browse by Service</h2>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter gallery by service">
+        {
+          galleryCategories.map((c, i) => (
+            <button type="button" class="filter" data-filter={c.id} aria-pressed={i === 0 ? 'true' : 'false'}>
+              {c.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="gallery">
+        {
+          gallery.map((g) => (
+            <figure class="gallery-item" data-cat={g.cat}>
+              <div class="media gallery-img">
+                <img src={g.src} alt={g.alt} width="400" height="500" loading="lazy" />
+                <span class="cat">{categoryLabel(g.cat)}</span>
+              </div>
+              <figcaption>{g.caption}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <div class="fb">
+        <div class="stack" style="--gap:6px">
+          <span class="h3">Watch us work on Facebook</span>
+          <span class="fb-sub">See videos and recent jobs on our Facebook page.</span>
+        </div>
+        <a href={site.facebook} class="btn btn-sky btn-sm"><Icon name="facebook" size={18} /> Follow Legacy Wash Pros</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      items.forEach((item) => {
+        item.hidden = !(cat === 'all' || item.dataset.cat === cat);
+      });
+    });
+  });
+</script>
+
+<style>
+  .feature {
+    margin: 0;
+    border-radius: 20px;
+    aspect-ratio: 4 / 3;
+  }
+  .feature .tag {
+    left: 16px;
+    top: 16px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  .filters {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .filter {
+    font: 700 15px var(--font-body);
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1.5px solid var(--sky);
+    background: transparent;
+    color: var(--cream);
+  }
+  .filter[aria-pressed='true'] {
+    background: var(--sky);
+    color: var(--navy);
+  }
+  .gallery {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 20px;
+  }
+  .gallery-item {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .gallery-item[hidden] {
+    display: none;
+  }
+  .gallery-img {
+    border-radius: 16px;
+    aspect-ratio: 4 / 5;
+  }
+  .cat {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: rgba(0, 12, 26, 0.86);
+    color: var(--sky);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+  .gallery-item figcaption {
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .fb {
+    margin-top: 56px;
+    background: rgba(132, 191, 207, 0.1);
+    border: 1px solid rgba(132, 191, 207, 0.3);
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+  }
+  .fb .h3 {
+    font-size: 28px;
+  }
+  .fb-sub {
+    font-size: 16px;
+    color: var(--text-on-dark);
+  }
+</style>

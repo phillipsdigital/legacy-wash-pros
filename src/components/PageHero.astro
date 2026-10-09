@@ -1,0 +1,122 @@
+---
+/**
+ * Navy hero used on inner pages: breadcrumb, H1 (with orange "in Joplin, MO" accent),
+ * intro copy, optional actions/checks (default slot) and optional framed photo.
+ */
+import WaveLines from './WaveLines.astro';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  title: string;
+  accent?: string;
+  intro: string;
+  crumbs: Crumb[];
+  image?: { src: string; alt: string };
+  freeBadge?: boolean;
+  /** put the accent on its own line */
+  breakAccent?: boolean;
+}
+
+const { title, accent = 'in Joplin, MO', intro, crumbs, image, freeBadge = true, breakAccent = false } = Astro.props;
+---
+
+<section class="page-hero bg-navy">
+  <div class="ring" aria-hidden="true" style="right:-180px;top:-220px;width:620px;height:620px"></div>
+  <WaveLines variant="short" />
+  <div class:list={['container', 'hero-inner', { 'has-image': !!image }]}>
+    <div class="stack hero-copy" style="--gap:22px">
+      <nav aria-label="Breadcrumb" class="crumbs">
+        {
+          crumbs.map((c, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true">/</span>}
+              {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+            </>
+          ))
+        }
+      </nav>
+      <h1 class="h1">
+        {title}{breakAccent ? <br /> : ' '}<span class="accent">{accent}</span>
+      </h1>
+      <p class="lead">{intro}</p>
+      <slot />
+    </div>
+    {
+      image && (
+        <div class="hero-photo">
+          <div class="photo-back" aria-hidden="true" />
+          <div class="media photo">
+            <img src={image.src} alt={image.alt} width="800" height="1000" fetchpriority="high" />
+          </div>
+          {freeBadge && (
+            <div class="free-badge">
+              <strong>FREE</strong>
+              <span>Estimates</span>
+            </div>
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    position: relative;
+    padding-block: 56px 176px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 48px 64px;
+  }
+  .hero-copy {
+    flex: 1 1 520px;
+    min-width: 0;
+  }
+  .hero-inner:not(.has-image) .h1 {
+    max-width: 940px;
+  }
+  .lead {
+    font-size: 19px;
+    max-width: 640px;
+  }
+  .crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-on-dark);
+  }
+  .crumbs a {
+    text-decoration: none;
+  }
+  .hero-photo {
+    flex: 1 1 380px;
+    min-width: 0;
+    position: relative;
+    padding: 0 0 24px 24px;
+  }
+  .photo-back {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 24px;
+    top: 24px;
+    border-radius: var(--radius-lg);
+    background: var(--sky);
+  }
+  .photo {
+    border-radius: var(--radius-lg);
+    border: 6px solid var(--cream);
+    aspect-ratio: 4 / 5;
+  }
+</style>

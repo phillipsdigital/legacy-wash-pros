@@ -1,0 +1,95 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  /** Extra JSON-LD objects for this page */
+  schema?: Record<string, unknown>[];
+}
+
+const { title, description, image = '/images/two-story-after.webp', schema = [] } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = new URL(image, Astro.site ?? site.url).href;
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  '@id': `${site.url}/#business`,
+  name: site.name,
+  url: site.url,
+  telephone: '+1-417-529-5607',
+  email: site.email,
+  image: `${site.url}/images/logo.png`,
+  logo: `${site.url}/images/logo.png`,
+  description:
+    'Family-owned pressure washing and soft washing company serving Joplin, Webb City, Carthage and Carl Junction, Missouri.',
+  areaServed: site.serviceArea.map((city) => ({ '@type': 'City', name: `${city}, MO` })),
+  address: { '@type': 'PostalAddress', addressLocality: 'Joplin', addressRegion: 'MO', addressCountry: 'US' },
+  sameAs: [site.facebook],
+  founder: { '@type': 'Person', name: 'Ryan' },
+  foundingDate: '2025',
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/images/logo-180.png" />
+    <meta name="theme-color" content="#001429" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lalezar&family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: 16px;
+    top: -60px;
+    z-index: 100;
+    background: var(--orange);
+    color: var(--navy);
+    font-weight: 800;
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    top: 16px;
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Page Not Found | Legacy Wash Pros" description="The page you’re looking for couldn’t be found.">
+  <section class="section bg-navy">
+    <div class="container stack" style="--gap:22px; align-items:flex-start; padding-block:40px 80px">
+      <p class="eyebrow">404</p>
+      <h1 class="h1">This page washed away.</h1>
+      <p class="lead">The page you’re looking for doesn’t exist. Head back home or give us a call at {site.phone}.</p>
+      <div class="btn-row">
+        <a href="/" class="btn btn-orange">Back to Home</a>
+        <a href={`tel:${site.phoneRaw}`} class="btn btn-ghost-light">Call {site.phone}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+
+const textTips = ['Your name & address', 'What needs cleaning', 'A photo or two of the area', 'Best time to reach you'];
+---
+
+<BaseLayout
+  title="Contact Us | Free Pressure Washing Quote in Joplin, MO | Legacy Wash Pros"
+  description="Get a free pressure washing quote in Joplin, MO. Call or text Ryan at Legacy Wash Pros at (417) 529-5607 to schedule your free in-home estimate."
+>
+  <PageHero
+    title="Get a Free Pressure Washing Quote"
+    intro="Call or text Ryan at (417) 529-5607 to schedule your free in-home estimate. Homes and businesses across Joplin, Webb City, Carthage and Carl Junction."
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
+  />
+
+  <section class="bg-cream contact" aria-label="Contact options">
+    <div class="container contact-inner">
+      <div class="card call-card">
+        <div class="stack" style="--gap:8px">
+          <p class="eyebrow">Free in-home estimates</p>
+          <h2 class="h2 call-title">The fastest way to a quote? Call or text Ryan.</h2>
+        </div>
+        <a href={`tel:${site.phoneRaw}`} class="big-phone">{site.phone}</a>
+        <div class="btn-row">
+          <a href={`tel:${site.phoneRaw}`} class="btn btn-orange"><Icon name="phone" /> Call Now</a>
+          <a href={`sms:${site.phoneRaw}`} class="btn btn-navy"><Icon name="chat" /> Send a Text</a>
+        </div>
+        <div class="tips">
+          <span class="tips-title">Texting? Include these and we can quote faster:</span>
+          <ul>
+            {
+              textTips.map((t) => (
+                <li>
+                  <Icon name="check" color="#2E6F8E" stroke={2.5} />
+                  {t}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <aside class="contact-side">
+        <a href={`mailto:${site.email}`} class="contact-card">
+          <span class="ci"><Icon name="mail" size={24} color="#001429" /></span>
+          <span class="stack" style="--gap:2px; min-width:0">
+            <span class="ck">Email</span>
+            <span class="cv">{site.email}</span>
+          </span>
+        </a>
+        <a href={site.facebook} class="contact-card">
+          <span class="ci"><Icon name="facebook" size={22} color="#001429" /></span>
+          <span class="stack" style="--gap:2px">
+            <span class="ck">Facebook</span>
+            <span class="cv">Message us on Facebook</span>
+          </span>
+        </a>
+        <div class="info">
+          <span class="h3">Service area</span>
+          <p>
+            Joplin, Webb City, Carthage, Carl Junction and the surrounding communities. Not sure if we cover you? Just
+            text us your address.
+          </p>
+        </div>
+        <div class="info">
+          <span class="h3">Hours</span>
+          <p>{site.hours}</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 32px;
+    padding-bottom: 104px;
+  }
+  .call-card {
+    flex: 1.5 1 560px;
+    min-width: 0;
+    margin-top: -96px;
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 44px;
+    box-shadow: 0 24px 50px rgba(0, 20, 41, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .call-title {
+    font-size: 40px;
+    padding-top: 4px;
+  }
+  .big-phone {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 6vw, 72px);
+    line-height: 1;
+    color: var(--navy);
+    text-decoration: none;
+    padding-top: 6px;
+  }
+  .big-phone:hover {
+    color: var(--teal);
+  }
+  .tips {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .tips-title {
+    font-weight: 800;
+    font-size: 17px;
+  }
+  .tips ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px 24px;
+    font-size: 16px;
+    color: #33414f;
+  }
+  .tips li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .contact-side {
+    flex: 1 1 340px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 40px;
+  }
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    color: var(--navy);
+    text-decoration: none;
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: 0 1px 0 var(--line), 0 10px 24px rgba(0, 20, 41, 0.06);
+  }
+  .contact-card:hover {
+    color: var(--navy);
+  }
+  .ci {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--sky);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  .ck {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  .cv {
+    font-size: 17px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .info {
+    background: var(--sky-tint);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .info .h3 {
+    font-size: 24px;
+  }
+  .info p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #33414f;
+  }
+  @media (max-width: 640px) {
+    .call-card {
+      padding: 28px 22px;
+    }
+    .call-title {
+      font-size: 32px;
+    }
+  }
+</style>
